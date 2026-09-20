@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achraf Moussafir - Expert-Comptable Mémorialiste</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+            background: #0a0e17;
+            color: #cfd3da;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Fond graphique façon courbe boursière */
+        .chart-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 220%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.12;
+            pointer-events: none;
+            animation: driftChart 40s linear infinite;
+        }
+
+        @keyframes driftChart {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(70px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow-orb-1 {
+            width: 350px;
+            height: 350px;
+            top: 10%;
+            left: -100px;
+            background: radial-gradient(circle, rgba(212, 175, 106, 0.18), transparent 70%);
+            animation: floatOrb1 14s ease-in-out infinite;
+        }
+
+        .glow-orb-2 {
+            width: 300px;
+            height: 300px;
+            bottom: 5%;
+            right: -80px;
+            background: radial-gradient(circle, rgba(156, 122, 60, 0.15), transparent 70%);
+            animation: floatOrb2 18s ease-in-out infinite;
+        }
+
+        @keyframes floatOrb1 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(60px, 40px); }
+        }
+
+        @keyframes floatOrb2 {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-50px, -30px); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-item {
+            opacity: 0;
+            animation: fadeInUp 0.9s ease forwards;
+        }
+
+        .container {
+            max-width: 880px;
+            width: 100%;
+            background: #10151f;
+            border: 1px solid #232a38;
+            border-radius: 4px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 22px 45px;
+            border-bottom: 1px solid #232a38;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #6b7280;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .top-bar .tag {
+            color: #d4af6a;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .hero {
+            padding: 70px 45px 55px;
+            position: relative;
+        }
+
+        .eyebrow {
+            font-size: 0.85rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #d4af6a;
+            margin-bottom: 22px;
+            font-weight: 600;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            animation-delay: 0.1s;
+        }
+
+        .name {
+            font-size: 4.3rem;
+            font-weight: 400;
+            font-style: italic;
+            color: #f5f6f8;
+            line-height: 1.05;
+            letter-spacing: 0px;
+            margin-bottom: 24px;
+            animation-delay: 0.3s;
+        }
+
+        .name span {
+            display: block;
+            background: linear-gradient(110deg, #9c7a3c 20%, #e8c580 40%, #f5e4bc 50%, #e8c580 60%, #9c7a3c 80%);
+            background-size: 250% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-style: normal;
+            font-weight: 700;
+            letter-spacing: 2px;
+            animation: shineText 5s linear infinite;
+        }
+
+        @keyframes shineText {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #9aa1ac;
+            font-weight: 400;
+            font-style: italic;
+            max-width: 520px;
+            border-left: 3px solid #d4af6a;
+            padding-left: 20px;
+            animation-delay: 0.55s;
+        }
+
+        .divider-line {
+            height: 1px;
+            background: linear-gradient(90deg, #d4af6a 0%, transparent 100%);
+            margin: 0 45px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: #232a38;
+            animation-delay: 0.75s;
+        }
+
+        .skill-card {
+            background: #10151f;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 14px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 0.9s ease forwards;
+        }
+
+        .skill-card:nth-child(1) { animation-delay: 0.75s; }
+        .skill-card:nth-child(2) { animation-delay: 0.9s; }
+        .skill-card:nth-child(3) { animation-delay: 1.05s; }
+        .skill-card:nth-child(4) { animation-delay: 1.2s; }
+
+        .skill-card:hover {
+            background: #171d29;
+            transform: translateY(-4px);
+        }
+
+        .skill-icon {
+            width: 42px;
+            height: 42px;
+            color: #d4af6a;
+            transition: transform 0.4s ease;
+        }
+
+        .skill-card:hover .skill-icon {
+            transform: scale(1.12) rotate(-3deg);
+        }
+
+        .skill-label {
+            font-size: 0.85rem;
+            color: #9aa1ac;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            line-height: 1.4;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        @media (max-width: 768px) {
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .sections {
+            padding: 50px 45px;
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+        }
+
+        .section-block {
+            border-left: 2px solid #232a38;
+            padding-left: 28px;
+            transition: border-color 0.4s ease;
+            position: relative;
+        }
+
+        .section-block:first-of-type::before {
+            content: '"';
+            position: absolute;
+            top: -50px;
+            left: 10px;
+            font-size: 8rem;
+            font-family: Georgia, serif;
+            color: #d4af6a;
+            opacity: 0.08;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .section-block:hover {
+            border-left-color: #d4af6a;
+        }
+
+        .section-block:nth-of-type(1) { animation-delay: 0.9s; }
+        .section-block:nth-of-type(2) { animation-delay: 1.3s; }
+        .section-block:nth-of-type(3) { animation-delay: 1.7s; }
+
+        .section-text p {
+            font-size: 1.12rem;
+            line-height: 1.95;
+            color: #c3c8d0;
+            font-family: 'Optima', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            font-weight: 400;
+            letter-spacing: 0.2px;
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        .drop-cap::first-letter {
+            font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+            font-size: 4.6rem;
+            font-weight: 700;
+            color: #d4af6a;
+            float: left;
+            line-height: 0.78;
+            margin-right: 12px;
+            margin-top: 2px;
+        }
+
+        .role-highlight {
+            color: #d4af6a;
+            font-weight: 700;
+        }
+
+        .highlight {
+            color: #f5f6f8;
+            font-weight: 700;
+        }
+
+        .actions {
+            padding: 0 45px 50px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            animation-delay: 2.1s;
+        }
+
+        .btn {
+            padding: 17px 40px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            background: linear-gradient(135deg, #e8c580 0%, #d4af6a 50%, #9c7a3c 100%);
+            color: #0a0e17;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -60%;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.55), transparent);
+            transform: skewX(-20deg);
+            animation: sweepBtn 4s ease-in-out infinite;
+        }
+
+        @keyframes sweepBtn {
+            0% { left: -60%; }
+            40% { left: 130%; }
+            100% { left: 130%; }
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #f5f6f8 0%, #e8c580 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(156, 122, 60, 0.4);
+        }
+
+        .icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        .contact-section {
+            padding: 0 45px 55px;
+            display: flex;
+            justify-content: center;
+            animation-delay: 2.4s;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #9aa1ac;
+            text-decoration: none;
+            padding: 10px 16px;
+            font-size: 0.92rem;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            color: #d4af6a;
+            transform: translateY(-2px);
+        }
+
+        .contact-item .icon {
+            color: #9c7a3c;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 640px) {
+            .contact-info {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-bar, .hero, .sections, .actions {
+                padding-left: 25px;
+                padding-right: 25px;
+            }
+
+            .divider-line {
+                margin: 0 25px;
+            }
+
+            .name {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .section-block {
+                gap: 15px;
+            }
+
+            .section-num {
+                font-size: 1.6rem;
+                min-width: 35px;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .contact-item {
+                border-right: none;
+                border-bottom: 1px solid #232a38;
+                padding: 20px 25px;
+            }
+
+            .contact-item:last-child {
+                border-bottom: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <svg class="chart-bg" viewBox="0 0 2400 800" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="0,650 100,600 200,620 300,500 400,540 500,400 600,450 700,300 800,350 900,220 1000,260 1100,150 1200,180 1300,650 1400,600 1500,620 1600,500 1700,540 1800,400 1900,450 2000,300 2100,350 2200,220 2300,260 2400,180" fill="none" stroke="#d4af6a" stroke-width="2"/>
+        <polyline points="0,750 100,720 200,740 300,680 400,700 500,600 600,640 700,550 800,580 900,480 1000,500 1100,420 1200,440 1300,750 1400,720 1500,740 1600,680 1700,700 1800,600 1900,640 2000,550 2100,580 2200,480 2300,500 2400,420" fill="none" stroke="#6b7280" stroke-width="1"/>
+    </svg>
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+
+    <div class="container">
+        <div class="top-bar">
+            <span>Profil Candidat</span>
+            <span class="tag">CDI · Expertise Comptable</span>
+        </div>
+
+        <div class="hero">
+            <div class="eyebrow fade-item">Expert-comptable mémorialiste</div>
+            <h1 class="name fade-item">Achraf<span>MOUSSAFIR</span></h1>
+            <p class="subtitle fade-item">À la recherche d'un nouveau challenge en CDI, au sein d'un cabinet d'expertise comptable et d'audit.</p>
+        </div>
+
+        <div class="divider-line"></div>
+
+        <div class="skills-grid">
+            <div class="skill-card">
+                <svg class="skill-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v18M5 7l-3 6a3 3 0 006 0l-3-6zM19 7l-3 6a3 3 0 006 0l-3-6zM5 7h14M8 3h8"/>
+                </svg>
+                <span class="skill-label">Audit &amp;<br>Commissariat aux comptes</span>
+            </div>
+            <div class="skill-card">
+                <svg class="skill-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18M7 15l4-5 3 3 5-7"/>
+                </svg>
+                <span class="skill-label">Comptabilité &amp;<br>Révision des comptes</span>
+            </div>
+            <div class="skill-card">
+                <svg class="skill-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6M9 8h1M7 3h10a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2z"/>
+                </svg>
+                <span class="skill-label">Fiscalité &amp;<br>Liasses fiscales</span>
+            </div>
+            <div class="skill-card">
+                <svg class="skill-icon" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m5-4a4 4 0 100-8 4 4 0 000 8zm6 4a4 4 0 00-2-3.46M7 12a4 4 0 00-2 3.46"/>
+                </svg>
+                <span class="skill-label">Conseil &amp;<br>Accompagnement clients</span>
+            </div>
+        </div>
+
+        <div class="sections">
+            <div class="section-block fade-item">
+                <div class="section-text">
+                    <p class="drop-cap"><span class="role-highlight">Expert-comptable mémorialiste</span> en 2ème année de stage d'expertise comptable, titulaire d'un <span class="highlight">Master CCA</span> obtenu à la Faculté d'Économie et de Gestion d'Aix-Marseille Université, qui m'a permis d'obtenir 5 dispenses sur 7 unités du DSCG. Actuellement candidat à la validation de la dernière unité du DSCG, en vue de l'obtention du diplôme.</p>
+                </div>
+            </div>
+
+            <div class="section-block fade-item">
+                <div class="section-text">
+                    <p>Fort d'une expérience solide en cabinet d'expertise comptable, j'interviens sur des missions à forte valeur ajoutée : révision des comptes, établissement des comptes annuels et liasses fiscales, missions de commissariat aux comptes, accompagnement et conseil auprès des dirigeants sur leurs problématiques comptables, fiscales et financières.</p>
+                </div>
+            </div>
+
+            <div class="section-block fade-item">
+                <div class="section-text">
+                    <p>Rigoureux, autonome et doté d'un fort esprit d'équipe, je suis aujourd'hui à la recherche d'un nouveau challenge professionnel.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions fade-item">
+            <a href="cv.pdf" class="btn" download>
+                <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 2v8H4V6h12z"/>
+                    <path d="M6 8h8v2H6V8zM6 12h4v2H6v-2z"/>
+                </svg>
+                Consulter mon CV
+            </a>
+        </div>
+
+        <div class="contact-section fade-item">
+            <div class="contact-info">
+                <a href="mailto:moussafirachraf@gmail.com" class="contact-item">
+                    <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                    </svg>
+                    moussafirachraf@gmail.com
+                </a>
+                <a href="tel:+33779352562" class="contact-item">
+                    <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                    </svg>
+                    07 79 35 25 62
+                </a>
+                <a href="https://www.linkedin.com/in/achraf-moussafir-23407a156/" target="_blank" class="contact-item">
+                    <svg class="icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z" clip-rule="evenodd"/>
+                    </svg>
+                    LinkedIn
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
